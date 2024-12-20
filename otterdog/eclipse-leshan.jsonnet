@@ -1,6 +1,6 @@
 local orgs = import 'vendor/otterdog-defaults/otterdog-defaults.libsonnet';
 
-orgs.newOrg('eclipse-leshan') {
+orgs.newOrg('iot.leshan', 'eclipse-leshan') {
   settings+: {
     description: "",
     name: "Eclipse Leshan™",
