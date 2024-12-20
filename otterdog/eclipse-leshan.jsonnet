@@ -4,9 +4,6 @@ orgs.newOrg('iot.leshan', 'eclipse-leshan') {
   settings+: {
     description: "",
     name: "Eclipse Leshan™",
-    security_managers+: [
-      "iot-leshan-project-leads"
-    ],
     web_commit_signoff_required: false,
     workflows+: {
       actions_can_approve_pull_request_reviews: false,
