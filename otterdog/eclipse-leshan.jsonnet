@@ -1,5 +1,39 @@
 local orgs = import 'vendor/otterdog-defaults/otterdog-defaults.libsonnet';
 
+local orgs = import 'vendor/otterdog-defaults/otterdog-defaults.libsonnet';
+
+
+local defaultBranchesProtection(branches) = 
+  orgs.newRepoRuleset("branch-protection") {
+    bypass_actors+: [
+      "@eclipse-leshan/iot-leshan-project-leads "
+    ],
+    include_refs+: [std.format("refs/heads/%s", branch) for branch in branches],
+    required_pull_request+: {
+      required_approving_review_count: 1,
+      requires_last_push_approval: true,
+      requires_review_thread_resolution: true,
+      dismisses_stale_reviews: true,
+    },
+    required_status_checks+: {
+      strict: true,
+    },
+    requires_linear_history: true,
+  };
+
+local defaultTagsProtection(tags) = orgs.newRepoRuleset('tags-protection') {
+  target: "tag",
+  bypass_actors+: [
+    "@eclipse-leshan/iot-leshan-project-leads "
+  ],
+  include_refs+: [std.format("refs/tags/%s", tag) for tag in tags],
+  allows_creations: true,
+  allows_deletions: false,	
+  allows_updates: false,
+  required_pull_request: null,
+  required_status_checks: null,
+};
+
 orgs.newOrg('iot.leshan', 'eclipse-leshan') {
   settings+: {
     description: "",
@@ -41,6 +75,10 @@ orgs.newOrg('iot.leshan', 'eclipse-leshan') {
         "lwm2m-server"
       ],
       web_commit_signoff_required: false,
+      rulesets: [
+        defaultBranchesProtection(["master","1.x"]), // protect in-dev and stable branches
+        defaultTagsProtection(["leshan-*"]) // protect tags about release
+      ],
     },
     orgs.newRepo('leshan-website') {
       allow_merge_commit: true,
