@@ -1,12 +1,9 @@
 local orgs = import 'vendor/otterdog-defaults/otterdog-defaults.libsonnet';
 
-local orgs = import 'vendor/otterdog-defaults/otterdog-defaults.libsonnet';
-
-
 local defaultBranchesProtection(branches) = 
   orgs.newRepoRuleset("branch-protection") {
     bypass_actors+: [
-      "@eclipse-leshan/iot-leshan-project-leads "
+      "@eclipse-leshan/iot-leshan-project-leads"
     ],
     include_refs+: [std.format("refs/heads/%s", branch) for branch in branches],
     required_pull_request+: {
@@ -24,7 +21,7 @@ local defaultBranchesProtection(branches) =
 local defaultTagsProtection(tags) = orgs.newRepoRuleset('tags-protection') {
   target: "tag",
   bypass_actors+: [
-    "@eclipse-leshan/iot-leshan-project-leads "
+    "@eclipse-leshan/iot-leshan-project-leads"
   ],
   include_refs+: [std.format("refs/tags/%s", tag) for tag in tags],
   allows_creations: true,
