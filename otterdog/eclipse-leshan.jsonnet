@@ -3,7 +3,7 @@ local orgs = import 'vendor/otterdog-defaults/otterdog-defaults.libsonnet';
 local defaultBranchesProtection(branches) = 
   orgs.newRepoRuleset("branch-protection") {
     bypass_actors+: [
-      "@eclipse-leshan/iot-leshan-project-leads", "@eclipse-leshan-bot"
+      "@eclipse-leshan/iot-leshan-project-leads"
     ],
     include_refs+: [std.format("refs/heads/%s", branch) for branch in branches],
     required_pull_request+: {
