@@ -3,7 +3,8 @@ local orgs = import 'vendor/otterdog-defaults/otterdog-defaults.libsonnet';
 local defaultBranchesProtection(branches) = 
   orgs.newRepoRuleset("branch-protection") {
     bypass_actors+: [
-      "@eclipse-leshan/iot-leshan-project-leads"
+      "@eclipse-leshan/iot-leshan-project-leads",
+      "@eclipse-leshan/bot-bypass"
     ],
     include_refs+: [std.format("refs/heads/%s", branch) for branch in branches],
     required_pull_request+: {
@@ -40,6 +41,13 @@ orgs.newOrg('iot.leshan', 'eclipse-leshan') {
       actions_can_approve_pull_request_reviews: false,
     },
   },
+  teams+: [
+    orgs.newTeam('bot-bypass') {
+      members+: [
+        "eclipse-leshan-bot",
+      ],
+    },
+  ],
   webhooks+: [
     orgs.newOrgWebhook('https://ci.eclipse.org/leshan/github-webhook/') {
       content_type: "json",
