@@ -60,7 +60,6 @@ orgs.newOrg('iot.leshan', 'eclipse-leshan') {
   _repositories+:: [
     orgs.newRepo('leshan') {
       allow_update_branch: false,
-      default_branch: "master",
       delete_branch_on_merge: false,
       description: "Java Library for LWM2M",
       homepage: "https://www.eclipse.org/leshan/",
@@ -81,14 +80,13 @@ orgs.newOrg('iot.leshan', 'eclipse-leshan') {
       ],
       web_commit_signoff_required: false,
       rulesets: [
-        defaultBranchesProtection(["master","1.x"]), // protect in-dev and stable branches
+        defaultBranchesProtection(["main","1.x"]), // protect in-dev and stable branches
         defaultTagsProtection(["leshan-*"]) // protect tags about release
       ],
     },
     orgs.newRepo('leshan-website') {
       allow_merge_commit: true,
       allow_update_branch: false,
-      default_branch: "master",
       delete_branch_on_merge: false,
       private_vulnerability_reporting_enabled: true,
       web_commit_signoff_required: false,
